@@ -36,3 +36,7 @@ jobs:
 
     - name: Run tests
       run: poetry run pytest
+
+    - name: Analysing the code with pylint
+      run: |
+        poetry run pylint $(git ls-files '*.py')
