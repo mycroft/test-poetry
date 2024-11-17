@@ -4,7 +4,7 @@ import time
 from flask import Flask, Response
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
-from utils.random import get_random_number
+from utils.random_gen import get_random_number
 
 app = Flask(__name__)
 

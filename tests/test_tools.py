@@ -1,5 +1,5 @@
 """Tests for the utils module"""
-from utils.random import get_random_number
+from utils.random_gen import get_random_number
 
 def test_get_random_number_range():
     """Test that random number is within expected range"""
