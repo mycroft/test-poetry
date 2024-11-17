@@ -1,3 +1,4 @@
+"""Tests for the utils module"""
 from utils.random import get_random_number
 
 def test_get_random_number_range():

@@ -1,9 +1,10 @@
+"""main application file"""
+import time
+
 from flask import Flask, Response
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 from utils.random import get_random_number
-
-import time
 
 app = Flask(__name__)
 
@@ -28,6 +29,7 @@ REQUEST_LATENCY = Histogram(
 @app.route('/')
 @REQUEST_LATENCY.labels(endpoint='/').time()
 def hello():
+    """Hello World API endpoint"""
     REQUEST_COUNT.inc()
     ENDPOINT_COUNTER.labels(endpoint='/').inc()
     return 'Hello World!'
@@ -35,6 +37,7 @@ def hello():
 @app.route('/api/data')
 @REQUEST_LATENCY.labels(endpoint='/app/data').time()
 def get_data():
+    """Data API endpoint"""
     REQUEST_COUNT.inc()
     ENDPOINT_COUNTER.labels(endpoint='/app/data').inc()
 
@@ -44,6 +47,7 @@ def get_data():
 
 @app.route('/metrics')
 def metrics():
+    """Prometheus metrics endpoint"""
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 if __name__ == '__main__':
