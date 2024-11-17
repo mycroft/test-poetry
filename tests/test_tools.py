@@ -1,5 +1,7 @@
 """Tests for the utils module"""
+
 from utils.random_gen import get_random_number
+
 
 def test_get_random_number_range():
     """Test that random number is within expected range"""
@@ -7,10 +9,12 @@ def test_get_random_number_range():
         number = get_random_number()
         assert 0 <= number <= 10
 
+
 def test_get_random_number_returns_integer():
     """Test that the function returns an integer"""
     number = get_random_number()
     assert isinstance(number, int)
+
 
 def test_get_random_number_distribution():
     """Test that function returns different values"""
