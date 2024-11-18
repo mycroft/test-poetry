@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""Some worker sample"""
+
 import random
 import threading
 from time import sleep
@@ -16,7 +18,10 @@ WORK_DURATION = Histogram(
 
 
 class Worker(threading.Thread):
+    """Worker class"""
+
     def __init__(self, worker_id):
+        """Worker constructor"""
         super().__init__()
         print(f"Worker created {worker_id}")
         self.stopped = False
@@ -25,6 +30,7 @@ class Worker(threading.Thread):
         ACTIVE_WORKERS.inc()
 
     def run(self):
+        """Worker run method"""
         print("Worker running")
         WORKER_STARTED.inc()
 
@@ -34,14 +40,21 @@ class Worker(threading.Thread):
                 sleep(random.randint(1, 5))
 
     def stop(self):
+        """Stop the worker"""
         print(f"Worker stopped {self.name}")
         self.stopped = True
         WORKER_STOPPED.inc()
         ACTIVE_WORKERS.dec()
 
+    def __str__(self) -> str:
+        return "Worker"
+
 
 class Engine:
+    """Engine class"""
+
     def main(self):
+        """Engine main method"""
         print("Worker started")
 
         workers = []
@@ -64,8 +77,12 @@ class Engine:
         for worker in workers:
             worker.join()
 
+    def __str__(self) -> str:
+        return "Engine"
+
 
 def start():
+    """Start the worker"""
     start_http_server(8000)
     print("Metrics server started on port 8000")
 
