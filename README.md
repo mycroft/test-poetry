@@ -16,7 +16,7 @@ $ nix-shell
 ... this will run tests ...
 
 [nix-shell:~/dev/test-poetry]$ export FLASK_DEBUG=1
-[nix-shell:~/dev/test-poetry]$ poetry run python ./poetry_demo/main.py
+[nix-shell:~/dev/test-poetry]$ poetry run python ./web/main.py
  * Serving Flask app 'main'
  * Debug mode: on
 ...
