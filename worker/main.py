@@ -8,6 +8,8 @@ from time import sleep
 
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
 
+from utils.consumer import MessageConsumer
+
 WORKER_CREATED = Counter("worker_created_total", "Number of workers created")
 WORKER_STARTED = Counter("worker_started_total", "Number of workers started")
 WORKER_STOPPED = Counter("worker_stopped_total", "Number of workers stopped")
@@ -29,15 +31,27 @@ class Worker(threading.Thread):
         WORKER_CREATED.inc()
         ACTIVE_WORKERS.inc()
 
+        self.consumer = MessageConsumer()
+
     def run(self):
         """Worker run method"""
         print("Worker running")
         WORKER_STARTED.inc()
 
         while not self.stopped:
-            print(f"Worker working {self.name}")
-            with WORK_DURATION.time():
-                sleep(random.randint(1, 5))
+            try:
+                message = self.consumer.consume_one()
+                if message is None:
+                    continue
+
+                print(f"Worker working {self.name} with message {message}")
+                with WORK_DURATION.time():
+                    sleep(random.randint(1, 5))
+
+            except TimeoutError:
+                pass
+
+        self.consumer.close()
 
     def stop(self):
         """Stop the worker"""
